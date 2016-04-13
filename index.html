@@ -19,40 +19,96 @@
 
       <script src="js/underscore.js" type="text/javascript"></script>
       <script src="js/jquery.js" type="text/javascript"></script> 
+      <script src="js/jquery.sortable.js" type="text/javascript"></script> 
       <script src="js/backbone.js" type="text/javascript"></script> 
       <script src="js/handlebars.js" type="text/javascript"></script> 
       <script src="js/bootstrap.min.js"></script>
+
+      <style>
+        ul.source, ul.target {
+          min-height: 50px;
+          margin: 0px 25px 10px 0px;
+          padding: 2px;
+          border-width: 1px;
+          border-style: solid;
+          -webkit-border-radius: 3px;
+          -moz-border-radius: 3px;
+          border-radius: 3px;
+          list-style-type: none;
+          list-style-position: inside;
+        }
+        ul.source {
+          border-color: #f8e0b1;
+        }
+        ul.target {
+          border-color: #add38d;
+        }
+        .source li, .target li {
+          margin: 5px;
+          padding: 5px;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+        .source li {
+          background-color: #fcf8e3;
+          border: 1px solid #fbeed5;
+          color: #c09853;
+        }
+        .target li {
+          background-color: #ebf5e6;
+          border: 1px solid #d6e9c6;
+          color: #468847;
+        }
+        .sortable-dragging {
+          border-color: #ccc !important;
+          background-color: #fafafa !important;
+          color: #bbb !important;
+        }
+        .sortable-placeholder {
+          height: 40px;
+        }
+        .source .sortable-placeholder {
+          border: 2px dashed #f8e0b1 !important;
+          background-color: #fefcf5 !important;
+        }
+        .target .sortable-placeholder {
+          border: 2px dashed #add38d !important;
+          background-color: #f6fbf4 !important;
+        }
+      </style>
+
     </head>
     <body>
       <!-- Begin page content -->
       <div class="container">
-        <div class="header clearfix">
-          <nav>
-            <ul class="nav nav-pills pull-right">
-              <li role="presentation" class="active"><a href="#">Home</a></li>
-              <li role="presentation"><a href="#">About</a></li>
-              <li role="presentation"><a href="#">Contact</a></li>
-            </ul>
-          </nav>
-          <h3 class="text-muted">Project name</h3>
-        </div>
-
-        <div class="jumbotron">
-          <h1>Jumbotron heading</h1>
-          <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-        </div>
-
-        <div class="row marketing">
+        <div class="row ">
           <div class="col-lg-6">
-            <div class="content"></div>
+
+            <div class="panel panel-primary">
+              <div class="panel-heading">Verfügbare Hölfer</div>
+              <div class="panel-body">
+                <ul class="list-group source connected">
+                  <li class="list-group-item">Sepp</li>
+                  <li class="list-group-item">Toni</li>
+                  <li class="list-group-item">Qrigl</li>
+                  <li class="list-group-item">Sevi</li>
+                </ul>
+              </div>
+            </div>
+
           </div>
         </div>
+        <div class="row ">
+          <div class="content col-lg-5"></div>
+        </div>
+
 
       </div>
 
       <footer class="footer">
-        <p>&copy; 2015 Company, Inc.</p>
+      <p>&copy; 2016 Qriglmaster and his deputy, Inc.</p>
       </footer>
 
     </div> <!-- /container -->
@@ -60,82 +116,33 @@
     <script id="user-list-template" type="text/x-handlebars-template">
       <ul class="list-group">
         {{#each []}}
-          <li class="list-group-item">{{firstName}} {{lastName}}</li>
+        <li class="list-group-item">{{firstName}} {{lastName}}</li>
         {{/each}}
-    </script>
+      </script>
 
-    <script id="shift-list-template" type="text/x-handlebars-template">
-      <!-- Template for shift list items -->
-      <div class="row">
-        {{#each []}}
-        <div class=".col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">{{name}} {{start}} - {{end}}</div>
-            <div class="panel-body">
-              <ul class="list-group">
-                {{#each users}}
-                <li class="list-group-item">{{user}}</li>
-                {{/each}}
-              </ul>
+      <script id="shift-list-template" type="text/x-handlebars-template">
+        <!-- Template for shift list items -->
+        <div class="row">
+          {{#each []}}
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">{{name}} {{start}} - {{end}}</div>
+              <div class="panel-body">
+                <ul class="list-group target connected" data-id="{{id}}">
+                  {{#each users}}
+                  <li class="list-group-item">{{user}}</li>
+                  {{/each}}
+                </ul>
+              </div>
             </div>
           </div>
+          {{/each}}
         </div>
-        {{/each}}
-      </div>
-    </script>
+      </script>
 
-    <script type="text/javascript">
+      <script src="js/ui/views.js" type="text/javascript"></script>
+      <script src="js/ui/sortable.js" type="text/javascript"></script>
 
-      console.info('test')
-
-      var Shift = Backbone.Model.extend({
-        defaults:{
-          users:[]
-        },
-        initialize: function() {
-          console.log('New shift created...');
-        }
-      });
-
-      var shift1 = new Shift({
-        id: 1,
-        start: "13:00",
-        end: "14:00",
-        name:"Schicht 1"
-      });
-
-      var shift2 = new Shift({
-        id: 2,
-        start: "14:00",
-        end: "15:00",
-        name:"Schicht 2"
-      });
-
-      var Shifts = Backbone.Collection.extend({
-        model: Shift,
-        initialize: function() {
-          console.log('New collection initialized...');
-        }
-      });  
-
-      var theShifts = new Shifts([shift1, shift2]);  
-      var ShiftListView = Backbone.View.extend({
-        el: '.content',
-        initialize:function(){
-          this.render();
-        },
-        render: function () {
-          var source = $('#shift-list-template').html();
-          var template = Handlebars.compile(source);
-          var html = template(theShifts.toJSON());
-          this.$el.html(html);
-        }
-      });
-
-      var shiftListView = new ShiftListView();
-
-    </script>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-  </body>
-  </html>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+    </body>
+    </html>
