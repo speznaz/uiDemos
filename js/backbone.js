@@ -10,7 +10,7 @@
   // Establish the root object, `window` (`self`) in the browser, or `global` on the server.
   // We use `self` instead of `window` for `WebWorker` support.
   var root = (typeof self == 'object' && self.self === self && self) ||
-            (typeof global == 'object' && global.global === global && global);
+  (typeof global == 'object' && global.global === global && global);
 
   // Set up Backbone appropriately for the environment. Start with AMD.
   if (typeof define === 'function' && define.amd) {
@@ -21,15 +21,15 @@
     });
 
   // Next for Node.js or CommonJS. jQuery may not be needed as a module.
-  } else if (typeof exports !== 'undefined') {
-    var _ = require('underscore'), $;
-    try { $ = require('jquery'); } catch (e) {}
-    factory(root, exports, _, $);
+} else if (typeof exports !== 'undefined') {
+  var _ = require('underscore'), $;
+  try { $ = require('jquery'); } catch (e) {}
+  factory(root, exports, _, $);
 
   // Finally, as a browser global.
-  } else {
-    root.Backbone = factory(root, {}, root._, (root.jQuery || root.Zepto || root.ender || root.$));
-  }
+} else {
+  root.Backbone = factory(root, {}, root._, (root.jQuery || root.Zepto || root.ender || root.$));
+}
 
 })(function(root, Backbone, _, $) {
 
@@ -278,18 +278,18 @@
         var handler = handlers[j];
         if (
           callback && callback !== handler.callback &&
-            callback !== handler.callback._callback ||
-              context && context !== handler.context
-        ) {
+          callback !== handler.callback._callback ||
+          context && context !== handler.context
+          ) {
           remaining.push(handler);
-        } else {
-          listening = handler.listening;
-          if (listening && --listening.count === 0) {
-            delete listeners[listening.id];
-            delete listening.listeningTo[listening.objId];
-          }
+      } else {
+        listening = handler.listening;
+        if (listening && --listening.count === 0) {
+          delete listeners[listening.id];
+          delete listening.listeningTo[listening.objId];
         }
       }
+    }
 
       // Update tail event if the list has any events.  Otherwise, clean up.
       if (remaining.length) {
@@ -343,7 +343,7 @@
     var args = Array(length);
     for (var i = 0; i < length; i++) args[i] = arguments[i + 1];
 
-    eventsApi(triggerApi, this._events, name, void 0, args);
+      eventsApi(triggerApi, this._events, name, void 0, args);
     return this;
   };
 
@@ -542,7 +542,7 @@
     clear: function(options) {
       var attrs = {};
       for (var key in this.attributes) attrs[key] = void 0;
-      return this.set(attrs, _.extend({}, options, {unset: true}));
+        return this.set(attrs, _.extend({}, options, {unset: true}));
     },
 
     // Determine if the model has changed since the last `"change"` event.
@@ -689,9 +689,9 @@
     // that will be called.
     url: function() {
       var base =
-        _.result(this, 'urlRoot') ||
-        _.result(this.collection, 'url') ||
-        urlError();
+      _.result(this, 'urlRoot') ||
+      _.result(this.collection, 'url') ||
+      urlError();
       if (this.isNew()) return base;
       var id = this.get(this.idAttribute);
       return base.replace(/[^\/]$/, '$&/') + encodeURIComponent(id);
@@ -734,7 +734,7 @@
   // Underscore methods that we want to implement on the Model, mapped to the
   // number of arguments they take.
   var modelMethods = {keys: 1, values: 1, pairs: 1, invert: 1, pick: 0,
-      omit: 0, chain: 1, isEmpty: 1};
+    omit: 0, chain: 1, isEmpty: 1};
 
   // Mix in each Underscore method as a proxy to `Model#attributes`.
   addUnderscoreMethods(Model, modelMethods, 'attributes');
@@ -772,9 +772,9 @@
     var length = insert.length;
     var i;
     for (i = 0; i < tail.length; i++) tail[i] = array[i + at];
-    for (i = 0; i < length; i++) array[i + at] = insert[i];
-    for (i = 0; i < tail.length; i++) array[i + length + at] = tail[i];
-  };
+      for (i = 0; i < length; i++) array[i + at] = insert[i];
+        for (i = 0; i < tail.length; i++) array[i + length + at] = tail[i];
+      };
 
   // Define the Collection's inheritable methods.
   _.extend(Collection.prototype, Events, {
@@ -876,16 +876,16 @@
           models[i] = existing;
 
         // If this is a new, valid model, push it to the `toAdd` list.
-        } else if (add) {
-          model = models[i] = this._prepareModel(model, options);
-          if (model) {
-            toAdd.push(model);
-            this._addReference(model, options);
-            modelMap[model.cid] = true;
-            set.push(model);
-          }
+      } else if (add) {
+        model = models[i] = this._prepareModel(model, options);
+        if (model) {
+          toAdd.push(model);
+          this._addReference(model, options);
+          modelMap[model.cid] = true;
+          set.push(model);
         }
       }
+    }
 
       // Remove stale models.
       if (remove) {
@@ -985,8 +985,8 @@
     get: function(obj) {
       if (obj == null) return void 0;
       return this._byId[obj] ||
-        this._byId[this.modelId(obj.attributes || obj)] ||
-        obj.cid && this._byId[obj.cid];
+      this._byId[this.modelId(obj.attributes || obj)] ||
+      obj.cid && this._byId[obj.cid];
     },
 
     // Returns `true` if the model is in the collection.
@@ -1193,13 +1193,13 @@
   // 90% of the core usefulness of Backbone Collections is actually implemented
   // right here:
   var collectionMethods = {forEach: 3, each: 3, map: 3, collect: 3, reduce: 0,
-      foldl: 0, inject: 0, reduceRight: 0, foldr: 0, find: 3, detect: 3, filter: 3,
-      select: 3, reject: 3, every: 3, all: 3, some: 3, any: 3, include: 3, includes: 3,
-      contains: 3, invoke: 0, max: 3, min: 3, toArray: 1, size: 1, first: 3,
-      head: 3, take: 3, initial: 3, rest: 3, tail: 3, drop: 3, last: 3,
-      without: 0, difference: 0, indexOf: 3, shuffle: 1, lastIndexOf: 3,
-      isEmpty: 1, chain: 1, sample: 3, partition: 3, groupBy: 3, countBy: 3,
-      sortBy: 3, indexBy: 3, findIndex: 3, findLastIndex: 3};
+    foldl: 0, inject: 0, reduceRight: 0, foldr: 0, find: 3, detect: 3, filter: 3,
+    select: 3, reject: 3, every: 3, all: 3, some: 3, any: 3, include: 3, includes: 3,
+    contains: 3, invoke: 0, max: 3, min: 3, toArray: 1, size: 1, first: 3,
+    head: 3, take: 3, initial: 3, rest: 3, tail: 3, drop: 3, last: 3,
+    without: 0, difference: 0, indexOf: 3, shuffle: 1, lastIndexOf: 3,
+    isEmpty: 1, chain: 1, sample: 3, partition: 3, groupBy: 3, countBy: 3,
+    sortBy: 3, indexBy: 3, findIndex: 3, findLastIndex: 3};
 
   // Mix in each Underscore method as a proxy to `Collection#models`.
   addUnderscoreMethods(Collection, collectionMethods, 'models');
@@ -1539,11 +1539,11 @@
     // against the current location hash.
     _routeToRegExp: function(route) {
       route = route.replace(escapeRegExp, '\\$&')
-                   .replace(optionalParam, '(?:$1)?')
-                   .replace(namedParam, function(match, optional) {
-                     return optional ? match : '([^/?]+)';
-                   })
-                   .replace(splatParam, '([^?]*?)');
+      .replace(optionalParam, '(?:$1)?')
+      .replace(namedParam, function(match, optional) {
+       return optional ? match : '([^/?]+)';
+     })
+      .replace(splatParam, '([^?]*?)');
       return new RegExp('^' + route + '(?:\\?([\\s\\S]*))?$');
     },
 
@@ -1637,7 +1637,7 @@
     getPath: function() {
       var path = this.decodeFragment(
         this.location.pathname + this.getSearch()
-      ).slice(this.root.length - 1);
+        ).slice(this.root.length - 1);
       return path.charAt(0) === '/' ? path.slice(1) : path;
     },
 
@@ -1688,11 +1688,11 @@
 
         // Or if we've started out with a hash-based route, but we're currently
         // in a browser where it could be `pushState`-based instead...
-        } else if (this._hasPushState && this.atRoot()) {
-          this.navigate(this.getHash(), {replace: true});
-        }
-
+      } else if (this._hasPushState && this.atRoot()) {
+        this.navigate(this.getHash(), {replace: true});
       }
+
+    }
 
       // Proxy an iframe to handle location events if the browser doesn't
       // support the `hashchange` event, HTML5 history, or the user wants
@@ -1824,10 +1824,10 @@
 
       // If hash changes haven't been explicitly disabled, update the hash
       // fragment to store history.
-      } else if (this._wantsHashChange) {
-        this._updateHash(this.location, fragment, options.replace);
-        if (this.iframe && fragment !== this.getHash(this.iframe.contentWindow)) {
-          var iWindow = this.iframe.contentWindow;
+    } else if (this._wantsHashChange) {
+      this._updateHash(this.location, fragment, options.replace);
+      if (this.iframe && fragment !== this.getHash(this.iframe.contentWindow)) {
+        var iWindow = this.iframe.contentWindow;
 
           // Opening and closing the iframe tricks IE7 and earlier to push a
           // history entry on hash-tag change.  When replace is true, we don't
@@ -1842,11 +1842,11 @@
 
       // If you've told us that you explicitly don't want fallback hashchange-
       // based history, then `navigate` becomes a page refresh.
-      } else {
-        return this.location.assign(url);
-      }
-      if (options.trigger) return this.loadUrl(fragment);
-    },
+    } else {
+      return this.location.assign(url);
+    }
+    if (options.trigger) return this.loadUrl(fragment);
+  },
 
     // Update the hash location, either replacing the current entry, or adding
     // a new one to the browser history.

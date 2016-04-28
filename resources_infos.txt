@@ -1,0 +1,5 @@
+Resources/Informations
+
+Views
+
+http://unknownerror.org/opensource/jashkenas/backbone/q/stackoverflow/7328265/jquery-draggable-and-backbone-js-getting-reference-to-backbone-model-from-inside

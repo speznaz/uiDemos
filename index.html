@@ -50,7 +50,6 @@
       <div class="content col-lg-5"></div>
     </div>
 
-
   </div>
 
   <footer class="footer">
@@ -59,35 +58,7 @@
 
 </div> <!-- /container -->
 
-<script id="user-list-template" type="text/x-handlebars-template">
-  <ul class="list-group">
-    {{#each []}}
-    <li class="list-group-item">{{firstName}} {{lastName}}</li>
-    {{/each}}
-  </ul>
-</script>
-
-<script id="shift-list-template" type="text/x-handlebars-template">
-  <!-- Template for shift list items -->
-  <div class="row">
-    {{#each []}}
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">{{name}} {{start}} - {{end}}</div>
-        <div class="panel-body">
-          <ul class="list-group target connected" data-id="{{id}}">
-            {{#each users}}
-            <li class="list-group-item">{{user}}</li>
-            {{/each}}
-          </ul>
-        </div>
-      </div>
-    </div>
-    {{/each}}
-  </div>
-</script>
-
-<script src="js/ui/views.js" type="text/javascript"></script>
+<script src="js/ui/demo.js" type="text/javascript"></script>
 <script src="js/ui/sortable.js" type="text/javascript"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
